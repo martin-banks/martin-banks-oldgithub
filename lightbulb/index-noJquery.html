@@ -65,7 +65,7 @@
 		<div class="screw"></div>
 	</div>
 	<div id="button_container">
-		<button id="one">red</button>
+		<button>red</button>
 		<button>orange</button>
 		<button>gold</button>
 		<button>lightgreen</button>
@@ -79,7 +79,8 @@
 	var $button = document.getElementsByTagName("button"),
 		$lightbulb = document.getElementById("lightbulb"),
 		$body = document.getElementsByTagName("body"),
-		$disco = document.getElementById("disco");
+		$disco = document.getElementById("disco"),
+		previousPress = "off"
 	// Count number of buttons
 	var l = $button.length;
 	console.log(l);
@@ -89,40 +90,43 @@
 	for(i=0; i<l; i++){
 		$button[i].style.color = $button[i].innerHTML; 
 		$button[i].style.border = "solid 1px " + $button[i].innerHTML; 
-		/*
-		$button[i].css({
-			'color': $button[i].innerHTML,
-			'border': 'solid 1px ' + $button[i].innerHTML,
-		})*/
 	};
 
-	
+	var allButtons = document.getElementsByTagName('button');
+
+
+	for(var i=0; i<$button.length; i++){
+	    $button[i].onclick = colorChange;
+	}
+/*
+	function myfunction (){
+	    alert(this.indexOf);
+	}*/
 
 	// Button click 
-	document.getElementById("one").onclick=function(){
+	function colorChange(){
 		console.log("click!")
 		// Get the color of hte button from text
-		var lightColor = $(this).innerHTML;
+		var lightColor = this.innerHTML;
 		console.log(lightColor);
 		// If light is off or has different colour
-		if ( $lightbulb.attr('class') == 'off' || $lightbulb.attr('class') != lightColor ){
+		if ( previousPress === 'off' || previousPress !== lightColor ){
 			// turn on and change colour of light bulb
-			$lightbulb.style.boxShadow = '0 -10px 90px ' + lightColor, 
-			$lightbulb.style.border = "solid 1px " + $button[i].innerHTML; 
-
-			$lightbulb.css({
-					'background-color': '#fff',
-					'box-shadow': '0 -10px 90px ' + lightColor,
-					'border': 'none'
-				}).attr('class', lightColor);
+			$lightbulb.style.boxShadow = '0 -10px 90px ' + lightColor;
+			$lightbulb.style.border = "solid 1px " + lightColor; 
+			$lightbulb.style.backgroundColor = "#fff";
+			$lightbulb.style.border = "none";
+			//$lightbulb.addClass(lightColor);
+			previousPress = lightColor;
 		// else if is the same colour
-		} else if ($lightbulb.attr('class') == lightColor) {
+		} else if (previousPress === lightColor) {
+			console.log("remove");
 			// turn light off
-			$lightbulb.css({
-					'background-color': '',
-					'box-shadow': '',
-					'border': ''
-				}).attr('class', 'off');			
+			$lightbulb.style.backgroundColor = "";
+			$lightbulb.style.boxShadow = "";
+			$lightbulb.style.border = "";
+			//$lightbulb.className == off;	
+			previousPress = "off";	
 		};
 	};
 
@@ -137,19 +141,18 @@
 		// if loop is under 100 (disco not finished)
 		if(loops < 100) {
 			// change background colour
-			$body.css({
-					'background-color': c 
-				});
+			$body.style.backgroundColor = c ;
+			
 			//set light bulb to off
-			$lightbulb.css({
-					'background-color': '',
-					'box-shadow': '',
-					'border': ''
-				}).attr('class', 'off');
+			$lightbulb.style.backgroundColor = "";
+			$lightbulb.style.boxShadow = "";
+			$lightbulb.style.border = "";
+
+
 			// set a delay
 			setTimeout(function() {
 				// then change colour again
-				disco( $button[i].innerHTML );
+				disco( $button[r()].innerHTML );
 			}, 100);
 			// add one to theloop counter
 			loops += 1;
@@ -158,16 +161,14 @@
 			// reset counter
 			loops = 0;
 			// reset background color
-			$body.css({
-				'background-color': '' 
-			});
+			$body.style.backgroundColor = '' ;
 		}
 	}
 	
 	// Call disco function one disco button click	
 	$disco.click(function(){
 		// calling disco with first random colour 
-		disco( $button[i].innerHTML);		
+		disco( $button[r()].innerHTML);		
 	})
 
 </script>
