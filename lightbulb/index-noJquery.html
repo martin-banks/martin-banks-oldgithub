@@ -78,7 +78,7 @@
 <script type="text/javascript">
 	var $button = document.getElementsByTagName("button"),
 		$lightbulb = document.getElementById("lightbulb"),
-		$body = document.getElementsByTagName("body"),
+		$body = document.body,
 		$disco = document.getElementById("disco"),
 		previousPress = "off"
 	// Count number of buttons
@@ -92,16 +92,9 @@
 		$button[i].style.border = "solid 1px " + $button[i].innerHTML; 
 	};
 
-	var allButtons = document.getElementsByTagName('button');
-
-
 	for(var i=0; i<$button.length; i++){
 	    $button[i].onclick = colorChange;
 	}
-/*
-	function myfunction (){
-	    alert(this.indexOf);
-	}*/
 
 	// Button click 
 	function colorChange(){
@@ -116,7 +109,6 @@
 			$lightbulb.style.border = "solid 1px " + lightColor; 
 			$lightbulb.style.backgroundColor = "#fff";
 			$lightbulb.style.border = "none";
-			//$lightbulb.addClass(lightColor);
 			previousPress = lightColor;
 		// else if is the same colour
 		} else if (previousPress === lightColor) {
@@ -125,7 +117,6 @@
 			$lightbulb.style.backgroundColor = "";
 			$lightbulb.style.boxShadow = "";
 			$lightbulb.style.border = "";
-			//$lightbulb.className == off;	
 			previousPress = "off";	
 		};
 	};
@@ -134,21 +125,21 @@
 	var r = function(){
 		return Math.floor(Math.random() * l);
 	};
+
 	// loop counter
 	var loops = 0
+
 	// disco function
 	var disco = function(c){
+		console.log($button[r()].innerHTML);
 		// if loop is under 100 (disco not finished)
 		if(loops < 100) {
 			// change background colour
 			$body.style.backgroundColor = c ;
-			
 			//set light bulb to off
 			$lightbulb.style.backgroundColor = "";
 			$lightbulb.style.boxShadow = "";
 			$lightbulb.style.border = "";
-
-
 			// set a delay
 			setTimeout(function() {
 				// then change colour again
@@ -166,10 +157,11 @@
 	}
 	
 	// Call disco function one disco button click	
-	$disco.click(function(){
+	$disco.onclick = function(){
 		// calling disco with first random colour 
-		disco( $button[r()].innerHTML);		
-	})
+		disco( $button[r()].innerHTML);	
+	}
+	
 
 </script>
 </body>
